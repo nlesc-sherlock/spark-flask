@@ -24,3 +24,12 @@ The yarn cluster is trying to connect to the internal docker ip, which fails.
 Possible solution:
 Run docker container with public ip
 
+(Re)Using the network stack of the docker host machine can be done with:
+
+```
+docker run --net=host ....
+```` 
+(from https://docs.docker.com/engine/reference/run/#network-settings)
+
+
+
