@@ -7,10 +7,6 @@ ENV YARN_CONF_DIR=/conf
 ENV HADOOP_CONF_DIR=/app/conf
 ENV YARN_CONF_DIR=/app/conf
 ENV SPARK_CONF_DIR=/app/conf
-# TODO Uncomment JAVA_HOME in *env.sh
-# add
-#spark.driver.extraJavaOptions -Dhdp.version=2.4.2.0-258
-#spark.yarn.am.extraJavaOptions -Dhdp.version=2.4.2.0-258
 
 RUN yum -y install python-pip
 
@@ -20,4 +16,7 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["spark-submit", "--master", "yarn", "--proxy-user", "shelly", "--deploy-mode", "client", "--packages", "com.databricks:spark-csv_2.10:1.4.0", "app.py"]
+ENV FLASK_PORT=8080
+EXPOSE 8080
+
+ENTRYPOINT ["spark-submit", "--master", "yarn", "--deploy-mode", "client", "--proxy-user", "shelly", "--packages", "com.databricks:spark-csv_2.10:1.4.0", "app.py"]
